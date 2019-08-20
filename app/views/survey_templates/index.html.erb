@@ -1,0 +1,24 @@
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Province</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Interests</th>
+      <th scope="col">Biography</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% @survey_templates.each do |survey_template| %>
+	    <tr>
+	      <th scope="row"><%= survey_template.name%></th>
+	      <td><%= survey_template.province%></td>
+	      <td><%= survey_template.gender%></td>
+	      <td><%=survey_template.interests.to_sentence%></td>
+	      <td><%=survey_template.biography%></td>
+	      <td><%= link_to 'Show', survey_template_path(survey_template) %> | <%= link_to 'Edit', edit_survey_template_path(survey_template) %></td>
+	    </tr>
+    <% end %>
+  </tbody>
+</table>

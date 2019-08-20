@@ -1,0 +1,12 @@
+<div class="card">
+  <div class="card-header">
+    Survey Detail:
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">Name: <%= @survey_template.name%></h5>
+    <p class="card-text">Gender: <%= @survey_template.gender%></p>
+    <p class="card-text">Interests: <%=@survey_template.interests.to_sentence%></p>
+    <p class="card-text">BioGraphy: <%=@survey_template.biography%></p>
+    <%= link_to 'All Survey', survey_templates_path, class: "btn btn-primary" %>
+  </div>
+</div>
