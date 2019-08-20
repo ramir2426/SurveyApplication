@@ -1,24 +1,33 @@
 <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Province</th>
-      <th scope="col">Gender</th>
-      <th scope="col">Interests</th>
-      <th scope="col">Biography</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-  	<% @survey_templates.each do |survey_template| %>
-	    <tr>
-	      <th scope="row"><%= survey_template.name%></th>
-	      <td><%= survey_template.province%></td>
-	      <td><%= survey_template.gender%></td>
-	      <td><%=survey_template.interests.to_sentence%></td>
-	      <td><%=survey_template.biography%></td>
-	      <td><%= link_to 'Show', survey_template_path(survey_template) %> | <%= link_to 'Edit', edit_survey_template_path(survey_template) %></td>
-	    </tr>
-    <% end %>
-  </tbody>
+	<thead class="thead-dark">
+		<tr>
+			<th scope="col">Survey Name</th>
+			<th scope="col">Survey Description</th>
+			<th scope="col">Survey Creation Date</th>
+			<th scope="col">Status</th>
+			<th scope="col">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% @survey_templates.each do |survey_template| %>
+			<tr>
+				<th scope="row"><%= survey_template.name%></th>
+				<td><%= survey_template.description%></td>
+				<td><%= survey_template.created_at.strftime("%Y-%m-%d")%></td>
+				<td><%=survey_template.status.titleize if survey_template.status.present?%></td>
+				<td>
+					<%if current_user.is_admin? %>
+						<%= link_to 'Show', survey_template_path(survey_template) %> | <%= link_to 'Edit', edit_survey_template_path(survey_template) %>
+					<% end %>
+					<% unless current_user.is_admin? %>
+						<%if survey_template.status == "completed" %>
+							<%= link_to 'Show', survey_template_path(survey_template) %>
+						<% else %>
+							<%= link_to 'Fill', edit_survey_template_path(survey_template) %>
+						<% end%>
+					<% end %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
 </table>

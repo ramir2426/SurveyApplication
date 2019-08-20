@@ -1,0 +1,69 @@
+<%= form_with(model: @survey_template, local: true) do |form| %>
+
+	<% if @survey_template.errors.any? %>
+			<div id="error_explanation">
+				<ul>
+					<% @survey_template.errors.full_messages.each do |msg| %>
+						<li><%= msg %></li>
+					<% end %>
+				</ul>
+			</div>
+		<% end %>
+
+
+	<div class="form-group">
+		<%= form.label :name %><br>
+		<%= form.text_field :name, class: "form-control", placeholder: "Survey Name", disabled: (current_user.is_admin? ? false : true), required: true%>
+	</div>
+	<div class="form-group">
+		<%= form.label :description %><br>
+		<%= form.text_area :description, class: "form-control", placeholder: "Survey description", disabled: (current_user.is_admin? ? false : true) %>
+	</div>
+	<% unless current_user.is_admin? %>
+		<div class="form-group">
+			<%= form.label :gender %><br>
+			<%= form.radio_button(:gender, "male") %>
+			<%= form.label(:gender_male,   "Male") %>
+			<%= form.radio_button(:gender, "female") %>
+			<%= form.label(:gender_female, "Female") %>
+		</div>
+		<div class="form-group">
+			<%= form.label :province %><br>
+			<%= form.select :province, options_for_select([ "Blochistan", "KPK", "Punjab", "Sindh" ], @survey_template.province), {:prompt => "Select province"}, { class: "form-control"} %>
+			
+		</div>
+		<div class="form-group">
+			<% InterestData::Activities.each do |activity| %>
+				<div class="form-check-inline">
+						<label class="form-check-label" for="check2">
+							<%= form.check_box :interests, { multiple: true }, activity, nil %> <%= activity%>
+						</label>
+					</div>
+			<% end %>
+		</div>
+
+		<div class="form-group">
+			<%= form.label :biography %><br>
+			<%= form.text_area :biography, class: "form-control", placeholder: "Biography" %>
+		</div>
+	<% end %>
+
+	<%if current_user.is_admin%>
+		<div class="form-group">
+			<%= form.label "Assinged to" %><br>
+			<%=form.collection_select(:user_id, User.where(is_admin: false), :id, :full_name, {prompt: "Please select the user of this survey"}, class: "form-control", required: User.expect_admin.any?)%>
+		</div>
+	<%end%>
+
+	<%if current_user.id == @survey_template.user_id %>
+		<%= form.hidden_field :status, value: "partially_completed"%>
+	<%end%>
+
+	<div class="form-group text-center">
+		<%= link_to 'All Survey', survey_templates_path, class: "btn btn-secondary" %>
+		<%= form.submit "Save Work",class: "btn btn-primary" %>
+		<%= form.submit "Submit",class: "btn btn-primary" unless current_user.is_admin? %>
+	</div>
+
+
+<% end %>

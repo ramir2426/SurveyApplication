@@ -12,6 +12,13 @@
 	<body>
 		
 		<div class="container">
+			<%if user_signed_in? %>
+					<%= link_to('Logout', destroy_user_session_path, method: :delete, class: "navbar-brand btn pull-right") %>
+					<%if current_user.is_admin?%>
+						<%= link_to('New Survey', new_survey_template_path, class: "btn btn-primary") %>
+					<%end%>
+				
+			<%end%>
 			<p class="notice"><%= notice %></p>
 			<p class="alert"><%= alert %></p>
 			<%= yield %>

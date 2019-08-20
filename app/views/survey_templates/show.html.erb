@@ -4,9 +4,12 @@
   </div>
   <div class="card-body">
     <h5 class="card-title">Name: <%= @survey_template.name%></h5>
+    <p class="card-text">Description: <%= @survey_template.description%></p>
+    <p class="card-text">Assigned to: <%= @survey_template.user.full_name if @survey_template.user.present?%></p>
     <p class="card-text">Gender: <%= @survey_template.gender%></p>
     <p class="card-text">Interests: <%=@survey_template.interests.to_sentence%></p>
     <p class="card-text">BioGraphy: <%=@survey_template.biography%></p>
-    <%= link_to 'All Survey', survey_templates_path, class: "btn btn-primary" %>
+    <p class="card-text">Completion Date: <%=@survey_template.completion_date.strftime("%Y-%m-%d") if @survey_template.completion_date.present?%></p>
+    <%= link_to 'All Survey', survey_templates_path, class: "btn btn-secondary" %>
   </div>
 </div>
