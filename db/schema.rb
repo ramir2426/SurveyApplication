@@ -24,9 +24,9 @@ ActiveRecord::Schema.define(version: 2019_08_20_150440) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "description"
+    t.text "description"
     t.datetime "completion_date"
-    t.string "status"
+    t.string "status", default: "Pending"
     t.index ["user_id"], name: "index_survey_templates_on_user_id"
   end
 

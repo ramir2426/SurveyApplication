@@ -6,19 +6,24 @@ application up and running.
 Things you may want to cover:
 
 * Ruby version
+	ruby 2.6.1
+* Rails version
+	Rails 5.2.3
 
-* System dependencies
+* Database
+	Need postgres database in your system to run application
 
-* Configuration
+* Commands to run into project directory
+	gem install bundler
+	bundle install
+	rails db:create db:migrate db:seed
+	rails s
 
-* Database creation
+* admin user is created through seed
+	email: admin@bayt.com
+	password: password
 
-* Database initialization
+* All other users will be created from the sign up form of appliction from views.
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
 
 * ...

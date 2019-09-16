@@ -51,7 +51,7 @@
 	<%if current_user.is_admin%>
 		<div class="form-group">
 			<%= form.label "Assinged to" %><br>
-			<%=form.collection_select(:user_id, User.where(is_admin: false), :id, :full_name, {prompt: "Please select the user of this survey"}, class: "form-control", required: User.expect_admin.any?)%>
+			<%=form.collection_select(:user_id, User.where(is_admin: false), :id, :full_name, {prompt: "Please select the user of this survey"}, class: "form-control", required: User.expect_admin.any?, disabled: @survey_template.user_id.present?)%>
 		</div>
 	<%end%>
 
